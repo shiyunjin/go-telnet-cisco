@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"../telnet"
+	"github.com/shiyunjin/go-telnet-cisco"
 )
 
 func main() {
