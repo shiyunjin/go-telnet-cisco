@@ -28,10 +28,11 @@ func (c *Client) Write(conn net.Conn, bufs []byte) (n int, err error) {
 }
 
 func (c *Client) Connect(address string) (err error) {
-	c.Conn, err = net.Dial("tcp", address)
+	c.Conn, err = net.DialTimeout("tcp", address, 1 * time.Second)
 	if err != nil {
 		return err
 	}
+	c.Conn.SetDeadline(time.Now().Add(3 * time.Second))
 
 	n, err := c.Conn.Read(c.buf[0:])
 	if err != nil {
@@ -79,6 +80,8 @@ func (c *Client) Connect(address string) (err error) {
 	if err != nil {
 		return err
 	}
+
+	c.Conn.SetDeadline(time.Now().Add(15 * time.Second))
 
 	return err
 }
